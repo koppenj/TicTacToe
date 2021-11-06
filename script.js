@@ -26,12 +26,13 @@ const Amanda = playerCreate('Amanda', 'O');
 
 // Main
 const play = (() => {
+  let turnCounter = playerOne;
   const message = document.querySelector('#notifications');
   let newBoard = [...game.board];
-  let turnCounter = Josh;
 
   const battle = () => {
     const tiles = document.querySelectorAll('.tile');
+    message.textContent = `${turnCounter.name}`+ `'s turn`;
     tiles.forEach((tile) => {
       tile.addEventListener('click', (event) => {
         if( newBoard[event.target.id] == ' ') {
@@ -48,10 +49,10 @@ const play = (() => {
   }
 
   const turnSwitch = () => {
-    if(turnCounter == Josh) {
-      turnCounter = Amanda;
+    if(turnCounter == playerOne) {
+      turnCounter = playerTwo;
     } else {
-      turnCounter = Josh;
+      turnCounter = playerOne;
     }
     displayMessage();
   }
@@ -65,7 +66,7 @@ const play = (() => {
 
   const newGame = () => {
     clearBoard();
-    message.textContent = `${turnCounter.name}`+ `'s turn`;
+
     battle();
   }
 
@@ -79,7 +80,7 @@ const play = (() => {
     }
   } */
 
-  return { battle, clearBoard, newGame };
+  return { battle, clearBoard, newGame, playerCreate };
 })();
 
 const clearButton = document.querySelector('#clear');
@@ -89,5 +90,5 @@ clearButton.addEventListener('click', () => {
 
 const newButton = document.querySelector('#newGame');
 newButton.addEventListener('click', () => {
-  play.newGame()
+  play.newGame();
 });
