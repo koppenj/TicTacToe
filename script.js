@@ -73,7 +73,13 @@ const play = (() => {
     message.textContent = `${turnCounter.name}`+ `'s turn`;
   }
 
-  return { battle, newBoard, message, clearBoard, newGame };
+  /* const winCondition = (newBoard) => {
+    switch (newBoard) {
+      case
+    }
+  } */
+
+  return { battle, clearBoard, newGame };
 })();
 
 const clearButton = document.querySelector('#clear');
