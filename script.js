@@ -1,4 +1,4 @@
-// Initialize game
+// Rendering and default handling
 const game = (() => {
   const container = document.querySelector('#gameBoard');
   const board = [' ', ' ', ' ',
@@ -24,7 +24,7 @@ const playerCreate = (name, marker) => {
 const Josh = playerCreate('Josh', 'X');
 const Amanda = playerCreate('Amanda', 'O');
 
-// Make tiles playable
+// Main
 const play = (() => {
   const message = document.querySelector('#notifications');
   let newBoard = [...game.board];
@@ -41,7 +41,6 @@ const play = (() => {
           turnSwitch();
           battle();
         } else {
-          console.table(newBoard);
           message.textContent = 'That tile is already taken. Pick Again.';
         }
       });
@@ -77,7 +76,6 @@ const play = (() => {
   return { battle, newBoard, message, clearBoard, newGame };
 })();
 
-// Button and feature functions
 const clearButton = document.querySelector('#clear');
 clearButton.addEventListener('click', () => {
   play.clearBoard();
