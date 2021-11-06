@@ -1,16 +1,15 @@
-const message = document.querySelector('#notifications');
 // Initialize game
 const game = (() => {
   const container = document.querySelector('#gameBoard');
   const board = [' ', ' ', ' ',
                ' ', ' ', ' ',
                ' ', ' ', ' ']
-  const draw = (board) => {
-    for (let i = 0; i < board.length; i++) {
+  const draw = (template) => {
+    for (let i = 0; i < template.length; i++) {
       const tile = document.createElement('div');
       tile.classList.add('tile');
       tile.id = i;
-      tile.textContent = board[i];
+      tile.textContent = template[i];
       container.appendChild(tile);
     }
   };
@@ -27,53 +26,61 @@ const Amanda = playerCreate('Amanda', 'O');
 
 // Make tiles playable
 const play = (() => {
-  let turnCounter = Josh;
+  const message = document.querySelector('#notifications');
   let newBoard = [...game.board];
+  let turnCounter = Josh;
 
   const battle = () => {
     const tiles = document.querySelectorAll('.tile');
     tiles.forEach((tile) => {
       tile.addEventListener('click', (event) => {
-        newBoard[event.target.id] = `${play.turnCounter.marker}`;
-        game.container.replaceChildren();
-        game.draw(newBoard);
-        turnSwitch();
-        battle();
+        if( newBoard[event.target.id] == ' ') {
+          newBoard[event.target.id] = `${turnCounter.marker}`;
+          game.container.replaceChildren();
+          game.draw(newBoard);
+          turnSwitch();
+          battle();
+        } else {
+          console.table(newBoard);
+          message.textContent = 'That tile is already taken. Pick Again.';
+        }
       });
     });
   }
-  return { battle, newBoard, turnCounter };
-})();
-
-// Button functions
-const clearBoard = () => {
-  console.log('hi mom');
-  play.newBoard = [...game.board];
-  game.container.replaceChildren();
-  game.draw(play.newBoard);
-}
-
-  const clearButton = document.querySelector('#clear');
-  clearButton.addEventListener('click', clearBoard);
-
-  const newGame = () => {
-    console.log('starting fresh');
-    message.textContent = `${play.turnCounter.name}`+ `'s turn`;
-    play.battle();
-  }
-
-  const newButton = document.querySelector('#newGame');
-  newButton.addEventListener('click', newGame);
-
   const displayMessage = () => {
     message.textContent = `${play.turnCounter.name}`+ `'s turn`;
   }
 
   const turnSwitch = () => {
-    if(play.turnCounter == Josh) {
-      play.turnCounter = Amanda;
+    if(turnCounter == Josh) {
+      turnCounter = Amanda;
     } else {
-      play.turnCounter = Josh;
+      turnCounter = Josh;
     }
     displayMessage();
   }
+
+  const clearBoard = () => {
+    game.container.replaceChildren();
+    newBoard = [...game.board];
+    game.draw(newBoard);
+    message.textContent = 'Tic-Tac-Toe: Choose New Game To Begin';
+  }
+  const newGame = () => {
+    clearBoard();
+    message.textContent = `${play.turnCounter.name}`+ `'s turn`;
+    battle();
+  }
+  return { battle, turnCounter, newBoard, message, clearBoard, newGame };
+})();
+
+// Button and feature functions
+const clearButton = document.querySelector('#clear');
+clearButton.addEventListener('click', () => {
+  play.clearBoard();
+});
+
+const newButton = document.querySelector('#newGame');
+newButton.addEventListener('click', () => {
+  play.newGame()
+});
