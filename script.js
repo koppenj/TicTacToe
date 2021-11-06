@@ -47,9 +47,6 @@ const play = (() => {
       });
     });
   }
-  const displayMessage = () => {
-    message.textContent = `${play.turnCounter.name}`+ `'s turn`;
-  }
 
   const turnSwitch = () => {
     if(turnCounter == Josh) {
@@ -66,12 +63,18 @@ const play = (() => {
     game.draw(newBoard);
     message.textContent = 'Tic-Tac-Toe: Choose New Game To Begin';
   }
+
   const newGame = () => {
     clearBoard();
-    message.textContent = `${play.turnCounter.name}`+ `'s turn`;
+    message.textContent = `${turnCounter.name}`+ `'s turn`;
     battle();
   }
-  return { battle, turnCounter, newBoard, message, clearBoard, newGame };
+
+  const displayMessage = () => {
+    message.textContent = `${turnCounter.name}`+ `'s turn`;
+  }
+
+  return { battle, newBoard, message, clearBoard, newGame };
 })();
 
 // Button and feature functions
