@@ -19,14 +19,20 @@ return { container, board , draw };
 
 // Main
 const play = (() => {
-  function playerCreate(name, marker) {
+  let turnCounter;
+
+  const playerCreate = (name, marker) => {
     return {name, marker};
   };
 
-  const playerOne = playerCreate('Josh', 'X');
-  const playerTwo = playerCreate('Amanda', 'O');
-  let turnCounter = playerOne;
-
+  const getNames = () => {
+    const xName = prompt('Player One Name:');
+    const oName = prompt('Player Two Name:');
+    let playerOne = playerCreate( `${xName}`, 'X');
+    let playerTwo = playerCreate( `${oName}`, 'O');
+    turnCounter = playerOne;
+    return { playerOne, playerTwo }
+  };
   const message = document.querySelector('#notifications');
   let newBoard = [...game.board];
 
@@ -65,13 +71,13 @@ const play = (() => {
   }
 
   const newGame = () => {
+    getNames();
     clearBoard();
-    turnCounter = playerOne;
     battle();
   }
 
   const displayMessage = () => {
-    message.textContent = `${turnCounter.name}`+ `'s turn`;
+    message.textContent = `${requestNames.turnCounter.name}`+ `'s turn`;
   }
 
   /* const winCondition = (newBoard) => {
@@ -80,7 +86,7 @@ const play = (() => {
     }
   } */
 
-  return { battle, clearBoard, newGame, playerCreate };
+  return { battle, clearBoard, newGame, turnCounter, getNames };
 })();
 
 const clearButton = document.querySelector('#clear');
@@ -92,3 +98,6 @@ const newButton = document.querySelector('#newGame');
 newButton.addEventListener('click', () => {
   play.newGame();
 });
+
+
+// Not returning player one and two from inside function to the rest of the play module. leaving turnCounter undefined
