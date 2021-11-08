@@ -17,16 +17,16 @@ const game = (() => {
 return { container, board , draw };
 })();
 
-// Player FF
-const playerCreate = (name, marker) => {
-  return {name, marker};
-};
-const Josh = playerCreate('Josh', 'X');
-const Amanda = playerCreate('Amanda', 'O');
-
 // Main
 const play = (() => {
+  function playerCreate(name, marker) {
+    return {name, marker};
+  };
+
+  const playerOne = playerCreate('Josh', 'X');
+  const playerTwo = playerCreate('Amanda', 'O');
   let turnCounter = playerOne;
+
   const message = document.querySelector('#notifications');
   let newBoard = [...game.board];
 
@@ -66,7 +66,7 @@ const play = (() => {
 
   const newGame = () => {
     clearBoard();
-
+    turnCounter = playerOne;
     battle();
   }
 
