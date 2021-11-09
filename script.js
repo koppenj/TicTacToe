@@ -20,6 +20,8 @@ return { container, board , draw };
 // Main
 const play = (() => {
   let turnCounter;
+  let playerOne;
+  let playerTwo;
 
   const playerCreate = (name, marker) => {
     return {name, marker};
@@ -28,8 +30,8 @@ const play = (() => {
   const getNames = () => {
     const xName = prompt('Player One Name:');
     const oName = prompt('Player Two Name:');
-    let playerOne = playerCreate( `${xName}`, 'X');
-    let playerTwo = playerCreate( `${oName}`, 'O');
+    playerOne = playerCreate( `${xName}`, 'X');
+    playerTwo = playerCreate( `${oName}`, 'O');
     turnCounter = playerOne;
     return { playerOne, playerTwo }
   };
@@ -55,7 +57,7 @@ const play = (() => {
   }
 
   const turnSwitch = () => {
-    if(turnCounter == playerOne) {
+    if(turnCounter === playerOne) {
       turnCounter = playerTwo;
     } else {
       turnCounter = playerOne;
@@ -77,7 +79,7 @@ const play = (() => {
   }
 
   const displayMessage = () => {
-    message.textContent = `${requestNames.turnCounter.name}`+ `'s turn`;
+    message.textContent = `${turnCounter.name}`+ `'s turn`;
   }
 
   /* const winCondition = (newBoard) => {
@@ -99,5 +101,3 @@ newButton.addEventListener('click', () => {
   play.newGame();
 });
 
-
-// Not returning player one and two from inside function to the rest of the play module. leaving turnCounter undefined
