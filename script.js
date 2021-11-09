@@ -97,6 +97,12 @@ const play = (() => {
       // I want to use slice method to break newBoard into matching arrays like winPattern to compare them.
       // Maybe? Add/concat them to get XXX or OOO to find winners
     }
+    if (/* a slice matches a winPattern */) {
+      /* turn off event listener for tiles,
+      message that states who won. */
+    } else {
+      /* turn off board, and call it cats game. maybe suggest to play again */
+    }
   }
 
   return { battle, clearBoard, newGame, turnCounter, getNames };
