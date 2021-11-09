@@ -45,6 +45,7 @@ const play = (() => {
           newBoard[event.target.id] = `${turnCounter.marker}`;
           game.container.replaceChildren();
           game.draw(newBoard);
+          winCondition(newBoard);
           turnSwitch();
           battle();
         } else {
@@ -80,11 +81,23 @@ const play = (() => {
     message.textContent = `${turnCounter.name}`+ `'s turn`;
   }
 
-  /* const winCondition = (newBoard) => {
-    switch (newBoard) {
-      case
+  const winCondition = (newBoard) => {
+    const winPattern = [
+      [0,1,2],
+      [3,4,5],
+      [6,7,8],
+      [0,3,6],
+      [1,4,7],
+      [2,5,8],
+      [0,4,8],
+      [2,4,6],
+    ]
+    for (let i = 0; i < newBoard.length; i++) {
+      const testBoard = [newBoard[i]];
+      // I want to use slice method to break newBoard into matching arrays like winPattern to compare them.
+      // Maybe? Add/concat them to get XXX or OOO to find winners
     }
-  } */
+  }
 
   return { battle, clearBoard, newGame, turnCounter, getNames };
 })();
