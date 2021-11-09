@@ -28,10 +28,8 @@ const play = (() => {
   };
 
   const getNames = () => {
-    const xName = prompt('Player One Name:');
-    const oName = prompt('Player Two Name:');
-    playerOne = playerCreate( `${xName}`, 'X');
-    playerTwo = playerCreate( `${oName}`, 'O');
+    playerOne = playerCreate( prompt('Player One Name:'), 'X');
+    playerTwo = playerCreate( prompt('Player Two Name:'), 'O');
     turnCounter = playerOne;
     return { playerOne, playerTwo }
   };
