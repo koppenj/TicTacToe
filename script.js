@@ -81,7 +81,11 @@ const play = (() => {
     message.textContent = `${turnCounter.name}`+ `'s turn`;
   }
 
-  const winCondition = (newBoard) => {
+  const winCondition = () => {
+    let test = newBoard.join('');
+    let whoWon;
+    let whichPattern;
+    // winPattern is only for a visual of which indices are to be looked at. Can't figure how to use it inside a check for now
     const winPattern = [
       [0,1,2],
       [3,4,5],
@@ -92,19 +96,27 @@ const play = (() => {
       [0,4,8],
       [2,4,6],
     ]
-    for (let i = 0; i < newBoard.length; i++) {
-      const testBoard = [newBoard[i]];
-      // I want to use slice method to break newBoard into matching arrays like winPattern to compare them.
-      // Maybe? Add/concat them to get XXX or OOO to find winners
-    }
-    if (/* a slice matches a winPattern */) {
-      /* turn off event listener for tiles,
-      message that states who won. */
-    } else {
-      /* turn off board, and call it cats game. maybe suggest to play again */
-    }
+  const rowCheck = () => {
+    // Check each row for win, return boolean if true and store which row
   }
 
+  const ColCheck = () => {
+    // Check eaach column for win, return boolean if true and store which column
+  }
+
+  const diaCheck = () => {
+    // check both diagonals for win, blah blah blah
+  }
+
+  if (whoWon !== undefined) {
+    // Do things to tell user the winner. Also disable the board, and prompt to play again
+  }
+  if ( (whoWon === undefined) && (test.length === 9) ) {
+    // print cats game
+  }
+
+
+    };
   return { battle, clearBoard, newGame, turnCounter, getNames };
 })();
 
