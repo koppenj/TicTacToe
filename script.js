@@ -85,20 +85,36 @@ const play = (() => {
     let test = newBoard.join('');
     let whoWon;
     let whichPattern;
-    // winPattern is only for a visual of which indices are to be looked at. Can't figure how to use it inside a check for now
-    const winPattern = [
-      [0,1,2],
-      [3,4,5],
-      [6,7,8],
+    let playerOne = 'XXX';
+    let playerTwo = 'OOO';
+    const tiles = document.querySelectorAll('.tile');
+
+    let colWin = [
       [0,3,6],
       [1,4,7],
-      [2,5,8],
+      [2,5,8],];
+    let diagWin = [
       [0,4,8],
       [2,4,6],
-    ]
+    ];
+
   const rowCheck = () => {
-    // Check each row for win, return boolean if true and store which row
-  }
+    if (test.substring(0,3) === `${playerOne}`) {
+      whoWon = 'one';
+    } else if (test.substring(0,3) === `${playerTwo}`) {
+      whoWon = 'two';
+    } else if (test.substring(3,6) === `${playerOne}`) {
+      whoWon = 'one';
+    } else if (test.substring(3,6) === `${playerTwo}`) {
+      whoWon = 'two';
+    } else if (test.substring(6,9) === `${playerOne}`) {
+      whoWon = 'one';
+    } else if (test.substring(6,9) === `${playerTwo}`) {
+      whoWon = 'two';
+    } else {
+      return false;
+    }
+  };
 
   const ColCheck = () => {
     // Check eaach column for win, return boolean if true and store which column
@@ -107,14 +123,25 @@ const play = (() => {
   const diaCheck = () => {
     // check both diagonals for win, blah blah blah
   }
+  rowCheck();
+
+  if ( rowCheck && ColCheck && diaCheck === false) {
+    whoWon = 'Cats';
+  }
 
   if (whoWon !== undefined) {
-    // Do things to tell user the winner. Also disable the board, and prompt to play again
-  }
-  if ( (whoWon === undefined) && (test.length === 9) ) {
-    // print cats game
+    console.log(whoWon);
+    tiles.forEach((tile) => {
+      tile.removeEventListener('click', );
+    });
   }
 
+  if ( whoWon === 'Cats' ) {
+    console.log(`Cat's Game MEOW`);
+    tiles.forEach((tile) => {
+      tile.removeEventListener('click');
+    })
+  }
 
     };
   return { battle, clearBoard, newGame, turnCounter, getNames };
