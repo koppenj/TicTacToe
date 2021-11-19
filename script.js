@@ -42,15 +42,13 @@ const play = (() => {
     message.textContent = `${playerTurn.name}`+ `'s turn`;
     tiles.forEach((tile) => {
       tile.addEventListener('click', (event) => {
-        if( newBoard[event.target.id] == ' ') {
+        if (newBoard[event.target.id] == ' ') {
           newBoard[event.target.id] = `${playerTurn.marker}`;
           game.container.replaceChildren();
           game.draw(newBoard);
-
           if (turnCount >= 3) {
             winCondition(newBoard);
-            console.log(turnCount);
-          };
+          }
 
           turnSwitch();
           battle();
@@ -62,7 +60,7 @@ const play = (() => {
   }
 
   const turnSwitch = () => {
-    if(playerTurn === playerOne) {
+    if (playerTurn === playerOne) {
       playerTurn = playerTwo;
     } else {
       playerTurn = playerOne;
@@ -111,7 +109,7 @@ const play = (() => {
       [2,4,6],];
 
     const rowCheck = (() => {
-      if ( test.substring(0,3) === `${playerOne}`) {
+      if (test.substring(0,3) === `${playerOne}`) {
         whoWon = 'one';
       } else if (test.substring(0,3) === `${playerTwo}`) {
         whoWon = 'two';
