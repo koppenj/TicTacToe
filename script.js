@@ -22,7 +22,7 @@ const play = (() => {
   let playerTurn;
   let playerOne;
   let playerTwo;
-  let turnCount = 0;
+  let turnCount = 1;
 
   const playerCreate = (name, marker) => {
     return {name, marker};
@@ -49,6 +49,7 @@ const play = (() => {
 
           if (turnCount >= 3) {
             winCondition(newBoard);
+            console.log(turnCount);
           };
 
           turnSwitch();
@@ -74,6 +75,7 @@ const play = (() => {
     game.container.replaceChildren();
     newBoard = [...game.board];
     game.draw(newBoard);
+    turnCount = 1;
     message.textContent = 'Tic-Tac-Toe: Choose New Game To Begin';
   }
 
@@ -85,7 +87,6 @@ const play = (() => {
 
   const displayMessage = () => {
     message.textContent = `${playerTurn.name}`+ `'s turn`;
-    console.log(turnCount);
   }
 
   const winCondition = () => {
@@ -94,7 +95,6 @@ const play = (() => {
     let whichPattern;
     let playerOne = 'XXX';
     let playerTwo = 'OOO';
-    const tiles = document.querySelectorAll('.tile');
 
     let rowWin = [
       [0,1,2],
@@ -110,53 +110,42 @@ const play = (() => {
       [0,4,8],
       [2,4,6],];
 
-  const rowCheck = () => {
-    if (test.substring(0,3) === `${playerOne}`) {
-      whoWon = 'one';
-    } else if (test.substring(0,3) === `${playerTwo}`) {
-      whoWon = 'two';
-    } else if (test.substring(3,6) === `${playerOne}`) {
-      whoWon = 'one';
-    } else if (test.substring(3,6) === `${playerTwo}`) {
-      whoWon = 'two';
-    } else if (test.substring(6,9) === `${playerOne}`) {
-      whoWon = 'one';
-    } else if (test.substring(6,9) === `${playerTwo}`) {
-      whoWon = 'two';
-    } else {
+    const rowCheck = (() => {
+      if ( test.substring(0,3) === `${playerOne}`) {
+        whoWon = 'one';
+      }/*  else if (test.substring(0,3) === `${playerTwo}`) {
+        whoWon = 'two';
+      } else if (test.substring(3,6) === `${playerOne}`) {
+        whoWon = 'one';
+      } else if (test.substring(3,6) === `${playerTwo}`) {
+        whoWon = 'two';
+      } else if (test.substring(6,9) === `${playerOne}`) {
+        whoWon = 'one';
+      } else if (test.substring(6,9) === `${playerTwo}`) {
+        whoWon = 'two';
+      }  */else {
+        return false;
+      }
+    })();
+
+    const ColCheck = (() => {
+      // Check eaach column for win, return boolean if true and store which column
       return false;
+    })();
+
+    const diaCheck = (() => {
+      // check both diagonals for win, blah blah blah
+      return false;
+    })();
+
+    if (whoWon !== undefined) {
+      console.log(whoWon);
     }
-  };
-
-  const ColCheck = () => {
-    // Check eaach column for win, return boolean if true and store which column
-
-  }
-
-  const diaCheck = () => {
-    // check both diagonals for win, blah blah blah
-  }
-  rowCheck();
-
-  if ( rowCheck && ColCheck && diaCheck === false) {
-    whoWon = 'Cats';
-  }
-
-  if (whoWon !== undefined) {
-    console.log(whoWon);
-    tiles.forEach((tile) => {
-      tile.removeEventListener('click', );
-    });
-  }
-
-  if ( whoWon === 'Cats' ) {
-    console.log(`Cat's Game MEOW`);
-    tiles.forEach((tile) => {
-      tile.removeEventListener('click');
-    })
-  }
-
+    if ( turnCount === 9 && whoWon === undefined ) {
+      whoWon = 'Cats';
     };
+
+  };
   return { clearBoard, newGame };
 })();
 
