@@ -87,13 +87,11 @@ const play = (() => {
     message.textContent = `${playerTurn.name}`+ `'s turn`;
   }
 
-  const winCondition = (newBoard) => {
+  const winCondition = () => {
     let xPosition = [];
     let oPosition = [];
     let whoWon;
-    // does this have value to do an index lookup table/array later when finding col and diag wins?
-    // Its job is to find every index where a marker is placed in newBoard. then each helper function should be able to do
-    // an indexOf lookup for respective win positions for both players
+
     for (let i = 0; i < newBoard.length; i++) {
       if (newBoard[i] === 'X') {
         xPosition.push(i);
@@ -102,9 +100,6 @@ const play = (() => {
         oPosition.push(i);
       }
     };
-
-    console.log(xPosition);
-    console.log(oPosition);
 
     let rowWin = [
       [0,1,2],
@@ -135,13 +130,25 @@ const play = (() => {
     })();
 
     const ColCheck = (() => {
-      // Check eaach column for win, return boolean if true and store which column
-      return false;
+      for (let i = 0; i < colWin.length; i++) {
+        if ( colWin[i].every(v => xPosition.includes(v))) {
+          whoWon = 'playerOne';
+        }
+        if ( colWin[i].every(v => oPosition.includes(v))) {
+          whoWon = 'playerTwo';
+        }
+      }
     })();
 
     const diaCheck = (() => {
-      // check both diagonals for win, blah blah blah
-      return false;
+      for (let i = 0; i < diagWin.length; i++) {
+        if ( diagWin[i].every(v => xPosition.includes(v))) {
+          whoWon = 'playerOne';
+        }
+        if ( diagWin[i].every(v => oPosition.includes(v))) {
+          whoWon = 'playerTwo';
+        }
+      }
     })();
 
     if (whoWon !== undefined) {
@@ -150,7 +157,6 @@ const play = (() => {
     if (turnCount === 9 && whoWon === undefined ) {
       whoWon = 'Cats';
     };
-
   };
   return { clearBoard, newGame };
 })();
