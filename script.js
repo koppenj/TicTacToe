@@ -118,6 +118,7 @@ const play = (() => {
 
   const ColCheck = () => {
     // Check eaach column for win, return boolean if true and store which column
+
   }
 
   const diaCheck = () => {
@@ -144,7 +145,7 @@ const play = (() => {
   }
 
     };
-  return { battle, clearBoard, newGame, turnCounter, getNames };
+  return { clearBoard, newGame };
 })();
 
 const clearButton = document.querySelector('#clear');
