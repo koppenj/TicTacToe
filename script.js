@@ -88,11 +88,9 @@ const play = (() => {
   }
 
   const winCondition = (newBoard) => {
-    let test = newBoard.join('');
-    let whoWon;
-    let whichPattern;
     let xPosition = [];
     let oPosition = [];
+    let whoWon;
     // does this have value to do an index lookup table/array later when finding col and diag wins?
     // Its job is to find every index where a marker is placed in newBoard. then each helper function should be able to do
     // an indexOf lookup for respective win positions for both players
@@ -126,13 +124,12 @@ const play = (() => {
     ];
 
     const rowCheck = (() => {
-      for (let i = 0; i< rowWin.length; i++) {
-        if (xPosition.contains(rowWin[i])) {
+      for (let i = 0; i < rowWin.length; i++) {
+        if ( rowWin[i].every(v => xPosition.includes(v))) {
           whoWon = 'playerOne';
-        } else if (oPosition.contains(rowWin[i])) {
+        }
+        if ( rowWin[i].every(v => oPosition.includes(v))) {
           whoWon = 'playerTwo';
-        } else {
-          return false;
         }
       }
     })();
