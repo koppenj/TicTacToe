@@ -87,42 +87,53 @@ const play = (() => {
     message.textContent = `${playerTurn.name}`+ `'s turn`;
   }
 
-  const winCondition = () => {
+  const winCondition = (newBoard) => {
     let test = newBoard.join('');
     let whoWon;
     let whichPattern;
-    let playerOne = 'XXX';
-    let playerTwo = 'OOO';
+    let xPosition = [];
+    let oPosition = [];
+    // does this have value to do an index lookup table/array later when finding col and diag wins?
+    // Its job is to find every index where a marker is placed in newBoard. then each helper function should be able to do
+    // an indexOf lookup for respective win positions for both players
+    for (let i = 0; i < newBoard.length; i++) {
+      if (newBoard[i] === 'X') {
+        xPosition.push(i);
+      }
+      if (newBoard[i] === 'O') {
+        oPosition.push(i);
+      }
+    };
+
+    console.log(xPosition);
+    console.log(oPosition);
 
     let rowWin = [
       [0,1,2],
       [3,4,5],
-      [6,7,8],];
+      [6,7,8],
+    ];
 
     let colWin = [
       [0,3,6],
       [1,4,7],
-      [2,5,8],];
+      [2,5,8],
+    ];
 
     let diagWin = [
       [0,4,8],
-      [2,4,6],];
+      [2,4,6],
+    ];
 
     const rowCheck = (() => {
-      if (test.substring(0,3) === `${playerOne}`) {
-        whoWon = 'one';
-      } else if (test.substring(0,3) === `${playerTwo}`) {
-        whoWon = 'two';
-      } else if (test.substring(3,6) === `${playerOne}`) {
-        whoWon = 'one';
-      } else if (test.substring(3,6) === `${playerTwo}`) {
-        whoWon = 'two';
-      } else if (test.substring(6,9) === `${playerOne}`) {
-        whoWon = 'one';
-      } else if (test.substring(6,9) === `${playerTwo}`) {
-        whoWon = 'two';
-      } else {
-        return false;
+      for (let i = 0; i< rowWin.length; i++) {
+        if (xPosition.contains(rowWin[i])) {
+          whoWon = 'playerOne';
+        } else if (oPosition.contains(rowWin[i])) {
+          whoWon = 'playerTwo';
+        } else {
+          return false;
+        }
       }
     })();
 
@@ -139,7 +150,7 @@ const play = (() => {
     if (whoWon !== undefined) {
       console.log(whoWon);
     }
-    if ( turnCount === 9 && whoWon === undefined ) {
+    if (turnCount === 9 && whoWon === undefined ) {
       whoWon = 'Cats';
     };
 
