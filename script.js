@@ -22,6 +22,7 @@ const play = (() => {
   let playerTurn;
   let playerOne;
   let playerTwo;
+  let turnCount = 0;
 
   const playerCreate = (name, marker) => {
     return {name, marker};
@@ -45,7 +46,11 @@ const play = (() => {
           newBoard[event.target.id] = `${playerTurn.marker}`;
           game.container.replaceChildren();
           game.draw(newBoard);
-          winCondition(newBoard);
+
+          if (turnCount >= 3) {
+            winCondition(newBoard);
+          };
+
           turnSwitch();
           battle();
         } else {
@@ -61,6 +66,7 @@ const play = (() => {
     } else {
       playerTurn = playerOne;
     }
+    turnCount++;
     displayMessage();
   }
 
@@ -79,6 +85,7 @@ const play = (() => {
 
   const displayMessage = () => {
     message.textContent = `${playerTurn.name}`+ `'s turn`;
+    console.log(turnCount);
   }
 
   const winCondition = () => {
