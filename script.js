@@ -41,7 +41,7 @@ const play = (() => {
     const tiles = document.querySelectorAll('.tile');
     message.textContent = `${playerTurn.name}`+ `'s turn`;
     tiles.forEach((tile) => {
-      tile.addEventListener('click', (event) => {
+      tile.addEventListener('click', function test(event) {
         if (newBoard[event.target.id] == ' ') {
           newBoard[event.target.id] = `${playerTurn.marker}`;
           game.container.replaceChildren();
@@ -121,10 +121,10 @@ const play = (() => {
     const rowCheck = (() => {
       for (let i = 0; i < rowWin.length; i++) {
         if ( rowWin[i].every(v => xPosition.includes(v))) {
-          whoWon = 'playerOne';
+          return whoWon = playerOne;
         }
         if ( rowWin[i].every(v => oPosition.includes(v))) {
-          whoWon = 'playerTwo';
+          return whoWon = playerTwo;
         }
       }
     })();
@@ -132,10 +132,10 @@ const play = (() => {
     const ColCheck = (() => {
       for (let i = 0; i < colWin.length; i++) {
         if ( colWin[i].every(v => xPosition.includes(v))) {
-          whoWon = 'playerOne';
+          return whoWon = playerOne;
         }
         if ( colWin[i].every(v => oPosition.includes(v))) {
-          whoWon = 'playerTwo';
+          return whoWon = playerTwo;
         }
       }
     })();
@@ -143,19 +143,23 @@ const play = (() => {
     const diaCheck = (() => {
       for (let i = 0; i < diagWin.length; i++) {
         if ( diagWin[i].every(v => xPosition.includes(v))) {
-          whoWon = 'playerOne';
+          return whoWon = playerOne;
         }
         if ( diagWin[i].every(v => oPosition.includes(v))) {
-          whoWon = 'playerTwo';
+          return whoWon = playerTwo;
         }
       }
     })();
 
     if (whoWon !== undefined) {
-      console.log(whoWon);
+      message.textContent = `${whoWon.name}`+ ` Wins`;
+      console.log(`${whoWon.name}`+ ` Wins`);
+      /* gameOver(); */
     }
     if (turnCount === 9 && whoWon === undefined ) {
       whoWon = 'Cats';
+      console.log('Cats Game!');
+      /* gameOver(); */
     };
   };
   return { clearBoard, newGame };
@@ -170,4 +174,5 @@ const newButton = document.querySelector('#newGame');
 newButton.addEventListener('click', () => {
   play.newGame();
 });
-
+// How to lock out game bro? Need tiles and test function to be accessible/public
+/* const gameOver = () => { removeEventListener('click', test(), true ) }; */
