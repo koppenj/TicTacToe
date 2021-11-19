@@ -19,7 +19,7 @@ return { container, board , draw };
 
 // Main
 const play = (() => {
-  let turnCounter;
+  let playerTurn;
   let playerOne;
   let playerTwo;
 
@@ -30,7 +30,7 @@ const play = (() => {
   const getNames = () => {
     playerOne = playerCreate( prompt('Player One Name:'), 'X');
     playerTwo = playerCreate( prompt('Player Two Name:'), 'O');
-    turnCounter = playerOne;
+    playerTurn = playerOne;
     return { playerOne, playerTwo }
   };
   const message = document.querySelector('#notifications');
@@ -38,11 +38,11 @@ const play = (() => {
 
   const battle = () => {
     const tiles = document.querySelectorAll('.tile');
-    message.textContent = `${turnCounter.name}`+ `'s turn`;
+    message.textContent = `${playerTurn.name}`+ `'s turn`;
     tiles.forEach((tile) => {
       tile.addEventListener('click', (event) => {
         if( newBoard[event.target.id] == ' ') {
-          newBoard[event.target.id] = `${turnCounter.marker}`;
+          newBoard[event.target.id] = `${playerTurn.marker}`;
           game.container.replaceChildren();
           game.draw(newBoard);
           winCondition(newBoard);
@@ -56,10 +56,10 @@ const play = (() => {
   }
 
   const turnSwitch = () => {
-    if(turnCounter === playerOne) {
-      turnCounter = playerTwo;
+    if(playerTurn === playerOne) {
+      playerTurn = playerTwo;
     } else {
-      turnCounter = playerOne;
+      playerTurn = playerOne;
     }
     displayMessage();
   }
@@ -78,7 +78,7 @@ const play = (() => {
   }
 
   const displayMessage = () => {
-    message.textContent = `${turnCounter.name}`+ `'s turn`;
+    message.textContent = `${playerTurn.name}`+ `'s turn`;
   }
 
   const winCondition = () => {
@@ -89,14 +89,19 @@ const play = (() => {
     let playerTwo = 'OOO';
     const tiles = document.querySelectorAll('.tile');
 
+    let rowWin = [
+      [0,1,2],
+      [3,4,5],
+      [6,7,8],];
+
     let colWin = [
       [0,3,6],
       [1,4,7],
       [2,5,8],];
+
     let diagWin = [
       [0,4,8],
-      [2,4,6],
-    ];
+      [2,4,6],];
 
   const rowCheck = () => {
     if (test.substring(0,3) === `${playerOne}`) {
