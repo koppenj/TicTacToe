@@ -117,7 +117,7 @@ const play = (() => {
       [0,4,8],
       [2,4,6],
     ];
-
+// [Refactor idea]: Consider removing IIFE for each win pattern and make a single for loop with ||. Would be significantly faster.
     const rowCheck = (() => {
       for (let i = 0; i < rowWin.length; i++) {
         if ( rowWin[i].every(v => xPosition.includes(v))) {
@@ -176,3 +176,7 @@ newButton.addEventListener('click', () => {
 });
 // How to lock out game bro? Need tiles and test function to be accessible/public
 /* const gameOver = () => { removeEventListener('click', test(), true ) }; */
+
+
+// Also need to refactor so I can abort battle function in order to allow message to display properly. It currently
+// wants to continue on with the callstack
