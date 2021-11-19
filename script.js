@@ -113,7 +113,7 @@ const play = (() => {
     const rowCheck = (() => {
       if ( test.substring(0,3) === `${playerOne}`) {
         whoWon = 'one';
-      }/*  else if (test.substring(0,3) === `${playerTwo}`) {
+      } else if (test.substring(0,3) === `${playerTwo}`) {
         whoWon = 'two';
       } else if (test.substring(3,6) === `${playerOne}`) {
         whoWon = 'one';
@@ -123,7 +123,7 @@ const play = (() => {
         whoWon = 'one';
       } else if (test.substring(6,9) === `${playerTwo}`) {
         whoWon = 'two';
-      }  */else {
+      } else {
         return false;
       }
     })();
