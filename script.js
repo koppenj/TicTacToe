@@ -123,21 +123,21 @@ const play = (() => {
     for (let i = 0; i < 3; i++) {
       if ( (rowWin[i].every(v => xPosition.includes(v)))
         || (colWin[i].every(v => xPosition.includes(v))) ) {
-          console.log('yes');
-        return whoWon = playerOne;
+        console.log('yes');
+        whoWon = playerOne;
       }
       if ( (rowWin[i].every(v => oPosition.includes(v)))
         || (colWin[i].every(v => oPosition.includes(v))) ) {
-          console.log('Yes times two');
-        return whoWon = playerTwo;
+        console.log('Yes times two');
+        whoWon = playerTwo;
       }
     };
     for (let i = 0; i < diagWin.length; i++) {
       if (diagWin[i].every(v => xPosition.includes(v)) ) {
-        return whoWon = playerOne;
+        whoWon = playerOne;
       }
       if (diagWin[i].every(v => oPosition.includes(v)) ) {
-        return whoWon = playerTwo;
+        whoWon = playerTwo;
       }
     };
 
