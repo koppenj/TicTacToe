@@ -34,18 +34,21 @@ const play = (() => {
     playerTurn = playerOne;
     return { playerOne, playerTwo }
   };
+
   const message = document.querySelector('#notifications');
   let newBoard = [...game.board];
 
   const battle = () => {
     const tiles = document.querySelectorAll('.tile');
     message.textContent = `${playerTurn.name}`+ `'s turn`;
-    tiles.forEach((tile) => {
-      tile.addEventListener('click', function test(event) {
-        if (newBoard[event.target.id] == ' ') {
-          newBoard[event.target.id] = `${playerTurn.marker}`;
-          game.container.replaceChildren();
-          game.draw(newBoard);
+    tiles.forEach(tile => {
+      tile.addEventListener('click',
+        function markBoard(event) {
+          let move = event.target.id;
+          if (newBoard[move] == ' ') {
+            newBoard[move] = `${playerTurn.marker}`;
+            game.container.replaceChildren();
+            game.draw(newBoard);
           if (turnCount >= 3) {
             winCondition(newBoard);
           }
@@ -71,6 +74,7 @@ const play = (() => {
 
   const clearBoard = () => {
     game.container.replaceChildren();
+    game.container.classList.remove('reset');
     newBoard = [...game.board];
     game.draw(newBoard);
     turnCount = 1;
@@ -81,6 +85,13 @@ const play = (() => {
     getNames();
     clearBoard();
     battle();
+  }
+
+  const gameOver = (whoWon) => {
+    game.container.replaceChildren();
+    message.textContent = `${whoWon.name}`+ 'Wins!';
+    game.container.classList.add('reset');
+    game.container.textContent = 'GAME OVER';
   }
 
   const displayMessage = () => {
@@ -110,13 +121,11 @@ const play = (() => {
     let colWin = [
       [0,3,6],
       [1,4,7],
-      [2,5,8],
-    ];
+      [2,5,8],];
 
     let diagWin = [
       [0,4,8],
-      [2,4,6],
-    ];
+      [2,4,6],];
 // [Note]: I had to seperate the diagonal wins from first for loop. I'm assuming this is from diagWin[3] being undefined?
 //          Either way, it is faster than original when it was three for-loops for each direction.
 
@@ -144,12 +153,12 @@ const play = (() => {
     if (whoWon !== undefined) {
       message.textContent = `${whoWon.name}`+ ` Wins`;
       console.log(`${whoWon.name}`+ ` Wins`);
-      /* gameOver(); */
+      gameOver(whoWon);
     }
     if (turnCount === 9 && whoWon === undefined ) {
       whoWon = 'Cats';
       console.log('Cats Game!');
-      /* gameOver(); */
+      gameOver(whoWon);
     };
   };
   return { clearBoard, newGame };
@@ -164,9 +173,6 @@ const newButton = document.querySelector('#newGame');
 newButton.addEventListener('click', () => {
   play.newGame();
 });
-// How to lock out game bro? Need tiles and test function to be accessible/public
-/* const gameOver = () => { removeEventListener('click', test(), true ) }; */
-
 
 // Also need to refactor so I can abort battle function in order to allow message to display properly. It currently
 // wants to continue on with the callstack
