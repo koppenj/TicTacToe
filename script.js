@@ -134,12 +134,10 @@ const play = (() => {
     for (let i = 0; i < 3; i++) {
       if ( (rowWin[i].every(v => xPosition.includes(v)))
         || (colWin[i].every(v => xPosition.includes(v))) ) {
-        console.log('yes');
         whoWon = playerOne;
       }
       if ( (rowWin[i].every(v => oPosition.includes(v)))
         || (colWin[i].every(v => oPosition.includes(v))) ) {
-        console.log('Yes times two');
         whoWon = playerTwo;
       }
     };
