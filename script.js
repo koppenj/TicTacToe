@@ -117,39 +117,29 @@ const play = (() => {
       [0,4,8],
       [2,4,6],
     ];
-// [Refactor idea]: Consider removing IIFE for each win pattern and make a single for loop with ||. Would be significantly faster.
-    const rowCheck = (() => {
-      for (let i = 0; i < rowWin.length; i++) {
-        if ( rowWin[i].every(v => xPosition.includes(v))) {
-          return whoWon = playerOne;
-        }
-        if ( rowWin[i].every(v => oPosition.includes(v))) {
-          return whoWon = playerTwo;
-        }
-      }
-    })();
+// [Note]: I had to seperate the diagonal wins from first for loop. I'm assuming this is from diagWin[3] being undefined?
+//          Either way, it is faster than original when it was three for-loops for each direction.
 
-    const ColCheck = (() => {
-      for (let i = 0; i < colWin.length; i++) {
-        if ( colWin[i].every(v => xPosition.includes(v))) {
-          return whoWon = playerOne;
-        }
-        if ( colWin[i].every(v => oPosition.includes(v))) {
-          return whoWon = playerTwo;
-        }
+    for (let i = 0; i < 3; i++) {
+      if ( (rowWin[i].every(v => xPosition.includes(v)))
+        || (colWin[i].every(v => xPosition.includes(v))) ) {
+          console.log('yes');
+        return whoWon = playerOne;
       }
-    })();
-
-    const diaCheck = (() => {
-      for (let i = 0; i < diagWin.length; i++) {
-        if ( diagWin[i].every(v => xPosition.includes(v))) {
-          return whoWon = playerOne;
-        }
-        if ( diagWin[i].every(v => oPosition.includes(v))) {
-          return whoWon = playerTwo;
-        }
+      if ( (rowWin[i].every(v => oPosition.includes(v)))
+        || (colWin[i].every(v => oPosition.includes(v))) ) {
+          console.log('Yes times two');
+        return whoWon = playerTwo;
       }
-    })();
+    };
+    for (let i = 0; i < diagWin.length; i++) {
+      if (diagWin[i].every(v => xPosition.includes(v)) ) {
+        return whoWon = playerOne;
+      }
+      if (diagWin[i].every(v => oPosition.includes(v)) ) {
+        return whoWon = playerTwo;
+      }
+    };
 
     if (whoWon !== undefined) {
       message.textContent = `${whoWon.name}`+ ` Wins`;
