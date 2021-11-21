@@ -16,9 +16,10 @@ const game = (() => {
   draw(board);
 return { container, board , draw };
 })();
-
+/* ################################################ */
 // Main
 const play = (() => {
+  let whoWon;
   let playerTurn;
   let playerOne;
   let playerTwo;
@@ -52,9 +53,10 @@ const play = (() => {
           if (turnCount >= 3) {
             winCondition(newBoard);
           }
-
-          turnSwitch();
-          battle();
+          if (!whoWon) {
+            turnSwitch();
+            battle();
+          }
         } else {
           message.textContent = 'That tile is already taken. Pick Again.';
         }
@@ -78,6 +80,7 @@ const play = (() => {
     newBoard = [...game.board];
     game.draw(newBoard);
     turnCount = 1;
+    whoWon = undefined;
     message.textContent = 'Tic-Tac-Toe: Choose New Game To Begin';
   }
 
@@ -101,7 +104,6 @@ const play = (() => {
   const winCondition = () => {
     let xPosition = [];
     let oPosition = [];
-    let whoWon;
 
     for (let i = 0; i < newBoard.length; i++) {
       if (newBoard[i] === 'X') {
@@ -151,19 +153,19 @@ const play = (() => {
     };
 
     if (whoWon !== undefined) {
-      message.textContent = `${whoWon.name}`+ ` Wins`;
-      console.log(`${whoWon.name}`+ ` Wins`);
+      message.textContent = `${whoWon.name}`+` `+`Wins`;
       gameOver(whoWon);
     }
     if (turnCount === 9 && whoWon === undefined ) {
       whoWon = 'Cats';
-      console.log('Cats Game!');
-      gameOver(whoWon);
+      game.container.replaceChildren();
+      message.textContent = `Cat's Game`;
     };
+    return { whoWon };
   };
   return { clearBoard, newGame };
 })();
-
+/* ######################################################################################## */
 const clearButton = document.querySelector('#clear');
 clearButton.addEventListener('click', () => {
   play.clearBoard();
@@ -175,4 +177,6 @@ newButton.addEventListener('click', () => {
 });
 
 // Also need to refactor so I can abort battle function in order to allow message to display properly. It currently
-// wants to continue on with the callstack
+// wants to continue on with the callstack. Game wipes and displays game over, but the message center will still
+// display the next persons turn. I also need to come up with a score card and an option or ability to continue
+// with the names that were inputted. Or do I go for the minimax algorhythm sp?
